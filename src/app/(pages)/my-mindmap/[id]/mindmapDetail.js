@@ -36,13 +36,6 @@ function MindmapDetail
 		}
 	);
 
-	function handleChangeType(type) {
-		console.log('handleChangeType', type);
-		setTypeShowShare(type);
-	}
-
-	// onClick={setTypeShowShare("private")}
-	// onClick={setTypeShowShare("public")}
 
 	// const postUser = async () => {
 	// 	const res = await fetch(`https://43jf2n-8080.csb.app/users`, {
@@ -153,29 +146,34 @@ function MindmapDetail
 							<div>
 								<input
 									type="radio"
-									id="private" name="private" className='mr-1'
-									onChange={() => handleChangeType('private')}
-									defaultChecked={typeShowShare === 'private'}
+									id="private" className='mr-1' name="type"
+									onChange={() => setTypeShowShare('private')}
+									checked={typeShowShare === "private"}
+									value='private'
 								/>
 								<label htmlFor="private">Riêng tư</label>
 							</div>
+
 							<div>
 								<input
 									type="radio"
-									id="public" name="private" className='mr-1'
-									onChange={() => handleChangeType('public')}
+									id="public" className='mr-1' name="type"
+									onChange={() => setTypeShowShare('public')}
+									checked={typeShowShare === "public"}
+									value='public'
 								/>
 								<label htmlFor="public">Công khai</label>
 							</div>
+
 						</div>
 					</Modal.Header>
 					<Modal.Body>
 
-					{ typeShowShare && typeShowShare === "private" &&
+					{ typeShowShare === "private" &&
 						<div>Nếu chọn riêng tư, chỉ có bạn mới được quyền xem Mindmap này</div>
 					}
 
-					{ typeShowShare && typeShowShare === "public" &&
+					{ typeShowShare === "public" &&
 						<Fragment>
 							{/*  */}
 							{/* 1 Url */}
