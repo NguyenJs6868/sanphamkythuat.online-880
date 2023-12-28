@@ -1,13 +1,11 @@
 "use client"
-
-import React, { useCallback, useEffect, useRef } from "react";
+import React, { useCallback, useRef } from "react";
 import ReactFlow, {
   useNodesState,
   useEdgesState,
   addEdge,
   useReactFlow,
   ReactFlowProvider,
-	MiniMap
 } from "reactflow";
 import "reactflow/dist/style.css";
 
@@ -17,17 +15,16 @@ const initialNodes = [
   {
     id: "0",
     type: "input",
-    data: { label: "My Mindmap" },
+    data: { label: "Node" },
     position: { x: 0, y: 50 },
-  },
+  }
 ];
 
 let id = 1;
 const getId = () => `${id++}`;
 
-function AddNodeOnEdgeDrop() {
-
-	const reactFlowWrapper = useRef(null);
+const AddNodeOnEdgeDrop = () => {
+  const reactFlowWrapper = useRef(null);
   const connectingNodeId = useRef(null);
   const [nodes, setNodes, onNodesChange] = useNodesState(initialNodes);
   const [edges, setEdges, onEdgesChange] = useEdgesState([]);
@@ -70,47 +67,22 @@ function AddNodeOnEdgeDrop() {
     [screenToFlowPosition]
   );
 
-	useEffect(() => {
-		// console.log('initialNodes', initialNodes);
-		// console.log('nodes có thay đổi', nodes);
-	}, [initialNodes, nodes]);
+  return (
+    <div className="mindmap-component" ref={reactFlowWrapper}>
+      <ReactFlow
+        nodes={nodes}
+        edges={edges}
+        onNodesChange={onNodesChange}
+        onEdgesChange={onEdgesChange}
+        onConnect={onConnect}
+        onConnectStart={onConnectStart}
+        onConnectEnd={onConnectEnd}
+        fitView
+        fitViewOptions={{ padding: 2 }}
+        nodeOrigin={[0.5, 0]}
+      />
+    </div>
+  );
+};
 
-	return (
-			<div className="mindmap-component" ref={reactFlowWrapper}>
-				<ReactFlow
-					nodes={nodes}
-					edges={edges}
-					onNodesChange={onNodesChange}
-					onEdgesChange={onEdgesChange}
-					onConnect={onConnect}
-					onConnectStart={onConnectStart}
-					onConnectEnd={onConnectEnd}
-					fitView
-					fitViewOptions={{ padding: 2 }}
-					nodeOrigin={[0.5, 0]}
-				/>
-        <Background />
-        <MiniMap nodeColor={nodeColor} />
-        <Controls />
-			</div>
-	);
-}
-
-function nodeColor(node) {
-  switch (node.type) {
-    case 'input':
-      return '#6ede87';
-    case 'output':
-      return '#6865A5';
-    default:
-      return '#ff0072';
-  }
-}
-
-
-export default () => (
-  <ReactFlowProvider>
-    <AddNodeOnEdgeDrop />
-  </ReactFlowProvider>
-);
-
+export default AddNodeOnEdgeDrop;

@@ -1,8 +1,8 @@
-import MindmapComponent from "~/components/mindmap3";
+// import MindmapComponent from "~/components/mindmap3";
 // import MindmapControl from "~/components/mindmap2/MindmapControl";
 import { getServerSession } from "next-auth";
-
-import "./index.css"
+// import { DataMindmapProvider } from '~/app/context/DataMindmapProvider';
+import MindmapDetail from "./mindmapDetail";
 
 export const metadata = {
 	title: 'Mindmap detail',
@@ -13,7 +13,7 @@ export const metadata = {
 	}
 };
 
-async function MyMindmapUsePage() {
+async function MyMindmapUsePage({ params: { id } }) {
   const session = await getServerSession();
 
 	if (!session) {
@@ -21,7 +21,10 @@ async function MyMindmapUsePage() {
 	}
 
 	return (
-		<MindmapComponent />
+    // <DataMindmapProvider>
+		<MindmapDetail />
+		// </DataMindmapProvider>
+
 	);
 }
 

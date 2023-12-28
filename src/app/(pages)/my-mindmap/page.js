@@ -1,6 +1,6 @@
 import { Fragment } from 'react';
 import MindmapListComponent from "~/components/minmap-list/MindmapList";
-import { getMindMap2 } from '../../../../lib/CallApiServer';
+// import { getMindMap2 } from '../../../../lib/CallApiServer';
 // import { getMindMap2 } from "~/lib/CallApiServer";
 import { getServerSession } from "next-auth";
 import { redirect } from "next/navigation";

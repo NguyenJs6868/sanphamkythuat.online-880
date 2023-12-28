@@ -3,15 +3,18 @@
 import React, { Fragment, useState } from 'react';
 import { usePathname } from 'next/navigation'
 
-import Mindmap from '~/components/mindmap3/Mindmap';
+// import Mindmap from '~/components/mindmap3/Mindmap';
 import { FaRegSave, FaShare } from 'react-icons/fa';
 import Toast from 'react-bootstrap/Toast';
 import Button from 'react-bootstrap/Button';
 import Modal from 'react-bootstrap/Modal';
 import Form from 'react-bootstrap/Form';
 import InputGroup from 'react-bootstrap/InputGroup';
+import "./index.scss";
+import FlowProvider from './flowProvider';
 
-function MindmapComponent({ id }) {
+function MindmapDetail
+({ id }) {
 	const pathname = usePathname();
 
 	const idMindmap = (pathname).replace(/^\/my-mindmap\//, "");
@@ -33,9 +36,9 @@ function MindmapComponent({ id }) {
 		}
 	);
 
-	console.log('pathname', pathname);
-	function handleChangeType() {
-
+	function handleChangeType(type) {
+		console.log('handleChangeType', type);
+		setTypeShowShare(type);
 	}
 
 	// onClick={setTypeShowShare("private")}
@@ -133,23 +136,6 @@ function MindmapComponent({ id }) {
 				</div>
 			</div>
 
-			{/* <div className="overlay" /> */}
-
-			{/* { statusModalShare && <div className="share-modal">
-				<div className="share-modal__header">
-					<div><input type="radio" id="private" name="private" className='mr-1'/><label htmlFor="private">Riêng tư</label></div>
-					<div><input type="radio" id="public" name="private" className='mr-1'/><label htmlFor="public">Công khai</label></div>
-				</div>
-
-				<div className="share-modal__body">
-
-				</div>
-				<div className="share-modal__footer">
-					<button onClick={handleCloseModalShare}>x Đóng</button>
-					<button onClick={handleSaveShareMindmap}>+ Lưu lại</button>
-				</div>
-			</div>} */}
-
 			<div
 				className="modal show"
 				style={{ display: 'block', position: 'initial' }}
@@ -157,7 +143,7 @@ function MindmapComponent({ id }) {
 				<Modal
 					show={showModalShare}
 					onHide={handleCloseModalShare}
-					centered
+					// centered
 					size="md"
 					backdrop="static"
 					id="showModalShare"
@@ -165,11 +151,20 @@ function MindmapComponent({ id }) {
 					<Modal.Header closeButton>
 						<div className="share-modal__header">
 							<div>
-								<input type="radio" id="private" name="private" className='mr-1' onChange={handleChangeType}/>
+								<input
+									type="radio"
+									id="private" name="private" className='mr-1'
+									onChange={() => handleChangeType('private')}
+									defaultChecked={typeShowShare === 'private'}
+								/>
 								<label htmlFor="private">Riêng tư</label>
 							</div>
 							<div>
-								<input type="radio" id="public" name="private" className='mr-1'/>
+								<input
+									type="radio"
+									id="public" name="private" className='mr-1'
+									onChange={() => handleChangeType('public')}
+								/>
 								<label htmlFor="public">Công khai</label>
 							</div>
 						</div>
@@ -206,6 +201,7 @@ function MindmapComponent({ id }) {
 									aria-label="Username"
 									aria-describedby="Username"
 									value={nameMindMap}
+									onChange={(event) => setNameMindMap(event.target.value)}
 								/>
 							</InputGroup>
 							{/* 3 Mô tả */}
@@ -217,6 +213,8 @@ function MindmapComponent({ id }) {
 									aria-label="description"
 									aria-describedby="description"
 									value={decriptionMindMap}
+									onChange={(event) => setDecriptionMindMap(event.target.value)}
+
 								/>
 							</InputGroup>
 							{/* 4 Ảnh chia sẻ */}
@@ -232,7 +230,6 @@ function MindmapComponent({ id }) {
 							</InputGroup>
 						</Fragment>
 					}
-
 					{/*  */}
 					</Modal.Body>
 					<Modal.Footer>
@@ -246,7 +243,7 @@ function MindmapComponent({ id }) {
 				</Modal>
 			</div>
 			{/* <Mindmap id={idMindmap} /> */}
-			{/* <FlowProvider id={idMindmap} /> */}
+			<FlowProvider id={idMindmap} />
 
 			{/* <Toast>
 				<Toast.Header>
@@ -261,4 +258,5 @@ function MindmapComponent({ id }) {
 	);
 }
 
-export default MindmapComponent;
+export default MindmapDetail
+;

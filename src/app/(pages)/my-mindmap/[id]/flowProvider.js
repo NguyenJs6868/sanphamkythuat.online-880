@@ -2,7 +2,7 @@
 import { ReactFlowProvider } from 'reactflow';
 import AddNodeOnEdgeDrop from './AddNodeOnEdgeDrop';
 
-function Flow({ id }) {
+function FlowProvider({ id }) {
   return (
     <ReactFlowProvider>
       <AddNodeOnEdgeDrop id={id} />
@@ -10,4 +10,4 @@ function Flow({ id }) {
   );
 }
 
-export default Flow;
+export default FlowProvider;
